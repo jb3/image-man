@@ -21,6 +21,7 @@
       copy:
         src: /home/joseph/config.yaml
         dest: /tmp/image-man/config.yaml
+        remote_src: yes
 
     - name: Send webhook to mark start of Dockerization
       uri:
