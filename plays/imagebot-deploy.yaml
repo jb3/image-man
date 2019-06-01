@@ -1,0 +1,56 @@
+- hosts: vps
+  tasks:
+    - name: Send webhook to mark start of deployment
+      uri:
+        url: "{{ webhook }}"
+        method: POST
+        body_format: json
+        status_code: 204
+        body:
+          content: ":inbox_tray: Deployment process starting for Image Man, updating from GitHub."
+    - name: Pull from GitHub
+      shell: cd /tmp && git clone git@github.com:jos-b/image-man.git
+
+    - name: Send webhook to mark start of Dockerization
+      uri:
+        url: "{{ webhook }}"
+        method: POST
+        body_format: json
+        status_code: 204
+        body:
+          content: ":whale2: Building Docker container"
+
+    - name: Build docker container
+      docker_image:
+        name: image_man
+        tag: latest
+        path: /tmp/image-man
+        state: present
+        force: yes
+
+    - name: Send webhook to notify start of restart
+      uri:
+        url: "{{ webhook }}"
+        method: POST
+        body_format: json
+        status_code: 204
+        body:
+          content: ":recycle: Restarting Image Man"
+
+    - name: Restart the container
+      docker_container:
+        name: image-man
+        image: image-man:latest
+        network_mode: host
+        recreate: yes
+        restart: yes
+        restart_policy: unless-stopped
+
+    - name: Send webhook message to notify of deployment
+      uri:
+        url: "{{ webhook }}"
+        method: POST
+        body_format: json
+        status_code: 204
+        body:
+          content: ":ok_hand: Image man has been deployed."
