@@ -27,17 +27,27 @@ class LiquidRescale(commands.Cog):
         self.bot.loop.create_task(self.session.close())
 
     @commands.command(aliases=["liquidrescale", "lqr"])
-    async def liquid_rescale(self, ctx, image: typing.Union[Member, str]):
+    async def liquid_rescale(
+        self,
+        ctx,
+        image: typing.Union[Member, str] = None
+    ):
         """
         Liquid rescale an images
         """
+
+        if image is None:
+            if len(ctx.message.attachments) == 0:
+                image = ""
+            else:
+                image = ctx.message.attachments[0].url
 
         if isinstance(image, Member):
             image = str(image.avatar_url_as(format="png"))
 
         if not image.startswith("http"):
             return await ctx.send(":warning: Make sure to use "
-                                  "a proper image link.")
+                                  "a proper image link or attach an image.")
 
         log.info(f"Downloading image from {image}")
 
