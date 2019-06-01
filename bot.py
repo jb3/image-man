@@ -1,4 +1,5 @@
 import glob
+import logging
 
 from discord.ext import commands
 from discord import Embed, Color
@@ -9,6 +10,10 @@ description = """
 Solving your image needs
 """
 
+logging.basicConfig(level=logging.INFO)
+
+log = logging.getLogger(__name__)
+
 
 class ImageMan(commands.Bot):
     def __init__(self):
@@ -16,7 +21,7 @@ class ImageMan(commands.Bot):
                          pm_help=None)
 
     async def on_ready(self):
-        print(f"Logged in as {self.user.name}")
+        log.info(f"Logged in as {self.user.name}")
         await self.load_cogs()
 
     async def on_command_error(self, ctx, exception):
@@ -31,6 +36,8 @@ class ImageMan(commands.Bot):
 
         error_channel = self.get_channel(config.channels.errors)
 
+        log.error(exception)
+
         await error_channel.send(embed=error_embed)
 
     async def load_cogs(self):
@@ -41,11 +48,11 @@ class ImageMan(commands.Bot):
         for module in module_names:
             try:
                 self.load_extension(module)
-                print(f"[+] Loaded {module}")
+                log.info(f"[+] Loaded {module}")
             except Exception as e:
                 await self.log_error(f"{e.name}: {e.args[0]}",
                                      title="Could not load cog")
-                print(f"[-] Could not load {module}")
+                log.error(f"[-] Could not load {module}")
 
 
 if __name__ == "__main__":
