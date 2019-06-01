@@ -8,6 +8,12 @@
         status_code: 204
         body:
           content: ":inbox_tray: Deployment process starting for Image Man, updating from GitHub."
+
+    - name: Remove old image-man directory
+      file:
+        state: absent
+        path: "/tmp/image-man"
+
     - name: Pull from GitHub
       shell: cd /tmp && git clone git@github.com:jos-b/image-man.git
 
