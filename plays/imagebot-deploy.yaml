@@ -17,6 +17,11 @@
     - name: Pull from GitHub
       shell: cd /tmp && git clone git@github.com:jos-b/image-man.git
 
+    - name: Copy config file to project
+      copy:
+        src: /home/joseph/config.yaml
+        dest: /tmp/image-man/config.yaml
+
     - name: Send webhook to mark start of Dockerization
       uri:
         url: "{{ webhook }}"
@@ -46,7 +51,7 @@
     - name: Restart the container
       docker_container:
         name: image-man
-        image: image-man:latest
+        image: image_man:latest
         network_mode: host
         recreate: yes
         restart: yes
