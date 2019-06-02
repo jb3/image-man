@@ -22,7 +22,7 @@ class LiquidRescale(commands.Cog):
         async with self.session.get(url) as response:
             return await response.read()
 
-    def liquid_rescale(self, image_data):
+    def do_liquid_rescale(self, image_data):
         with Image(blob=image_data) as im:
 
             if im.height > 500:
@@ -88,7 +88,7 @@ class LiquidRescale(commands.Cog):
 
         binary = await self.bot.loop.run_in_executor(
             None,
-            self.liquid_rescale,
+            self.do_liquid_rescale,
             image_data
         )
 
