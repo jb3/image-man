@@ -5,6 +5,7 @@ from discord.ext import commands
 from discord import Embed, Color
 
 from config import config
+from log import DiscordHandler
 
 description = """
 Solving your image needs
@@ -12,7 +13,7 @@ Solving your image needs
 
 logging.basicConfig(level=logging.INFO)
 
-log = logging.getLogger(__name__)
+log = logging.getLogger()
 
 
 class ImageMan(commands.Bot):
@@ -57,4 +58,5 @@ class ImageMan(commands.Bot):
 
 if __name__ == "__main__":
     bot = ImageMan()
+    log.addHandler(DiscordHandler(bot))
     bot.run(config.token)

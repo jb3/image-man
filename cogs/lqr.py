@@ -102,7 +102,5 @@ class LiquidRescale(commands.Cog):
         await ctx.send(file=fil)
 
 
-
-
 def setup(bot):
     bot.add_cog(LiquidRescale(bot))
