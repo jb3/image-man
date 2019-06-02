@@ -86,7 +86,7 @@ class LiquidRescale(commands.Cog):
 
         storage = BytesIO()
 
-        binary = self.bot.loop.run_in_executor(
+        binary = await self.bot.loop.run_in_executor(
             None,
             self.liquid_rescale,
             image_data
