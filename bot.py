@@ -98,7 +98,7 @@ class ImageMan(commands.Bot):
         else:
             extra_context["discord_info"]["Message"] = f"{ctx.message.id} (DM)"
 
-        self.bot.log.exception(error, extra=extra_context)
+        log.exception(error, extra=extra_context)
 
 
 if __name__ == "__main__":
