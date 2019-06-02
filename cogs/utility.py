@@ -7,6 +7,9 @@ class Utility(commands.Cog):
 
     @commands.command()
     async def ping(self, ctx):
+        """
+        Ping Pong
+        """
         await ctx.send(f"Pong! {round(self.bot.latency * 1000)}ms")
 
 
