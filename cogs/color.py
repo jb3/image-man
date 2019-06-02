@@ -81,7 +81,7 @@ class Color(commands.Cog):
         await negating_message.delete()
 
         storage.seek(0)
-        fil = File(storage, filename="lqr.png")
+        fil = File(storage, filename="negated.png")
 
         await ctx.send(file=fil)
 
