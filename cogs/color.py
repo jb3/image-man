@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 
 class Color(commands.Cog):
     """
-    Commands relating to liquid rescaling images
+    Commands relating to coloring of images
     """
     def __init__(self, bot):
         self.bot = bot
@@ -66,7 +66,7 @@ class Color(commands.Cog):
 
         await downloading_msg.delete()
 
-        rescaling_message = await ctx.send(":information_source: Negating...")
+        negating_message = await ctx.send(":information_source: Negating...")
 
         storage = BytesIO()
 
@@ -78,7 +78,7 @@ class Color(commands.Cog):
 
         storage.write(binary)
 
-        await rescaling_message.delete()
+        await negating_message.delete()
 
         storage.seek(0)
         fil = File(storage, filename="lqr.png")
@@ -86,7 +86,5 @@ class Color(commands.Cog):
         await ctx.send(file=fil)
 
 
-
-
 def setup(bot):
-    bot.add_cog(Negate(bot))
+    bot.add_cog(Color(bot))
