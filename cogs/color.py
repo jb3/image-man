@@ -4,6 +4,7 @@ from discord import File, Member
 from wand.image import Image
 
 import logging
+import random
 import typing
 from io import BytesIO
 
@@ -26,6 +27,15 @@ class Color(commands.Cog):
         with Image(blob=image_data) as im:
 
             im.negate()
+
+            binary = im.make_blob('png')
+
+        return binary
+
+    def do_intensify(self, image_data):
+        with Image(blob=image_data) as im:
+
+            im.modulate(hue=random.randint(1, 100), saturation=1000)
 
             binary = im.make_blob('png')
 
@@ -82,6 +92,58 @@ class Color(commands.Cog):
 
         storage.seek(0)
         fil = File(storage, filename="negated.png")
+
+        await ctx.send(file=fil)
+
+    @commands.command(aliases=["hsv", "trippy"])
+    async def intensify(
+        self,
+        ctx,
+        image: typing.Union[Member, str] = None
+    ):
+        """
+        Intensifies the colours in an image
+        """
+
+        if image is None:
+            if len(ctx.message.attachments) == 0:
+                image = ""
+            else:
+                image = ctx.message.attachments[0].url
+
+        if isinstance(image, Member):
+            image = str(image.avatar_url_as(format="png"))
+
+        if not image.startswith("http"):
+            return await ctx.send(":warning: Make sure to use "
+                                  "a proper image link or attach an image.")
+
+        log.info(f"Downloading image from {image}")
+
+        downloading_msg = await ctx.send(":information_source: Downloading...")
+
+        image_data = await self.download_image(image)
+
+        await downloading_msg.delete()
+
+        intensifying_message = await ctx.send(
+                                        ":information_source: Intensifying..."
+                                     )
+
+        storage = BytesIO()
+
+        binary = await self.bot.loop.run_in_executor(
+            None,
+            self.do_intensify,
+            image_data
+        )
+
+        storage.write(binary)
+
+        await intensifying_message.delete()
+
+        storage.seek(0)
+        fil = File(storage, filename="intensified.png")
 
         await ctx.send(file=fil)
 
