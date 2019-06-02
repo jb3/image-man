@@ -118,7 +118,7 @@ class Color(commands.Cog):
             return await ctx.send(":warning: Make sure to use "
                                   "a proper image link or attach an image.")
 
-        log.info(f"Downloading image from {image}")
+        log.debug(f"Downloading image from {image}")
 
         downloading_msg = await ctx.send(":information_source: Downloading...")
 
