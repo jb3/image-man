@@ -19,9 +19,8 @@
 
     - name: Copy config file to project
       copy:
-        src: /home/joseph/config.yaml
+        src: /Users/joseph/image-man/config.yaml
         dest: /tmp/image-man/config.yaml
-        remote_src: yes
 
     - name: Send webhook to mark start of Dockerization
       uri:
