@@ -1,0 +1,13 @@
+[Unit]
+Description=ImageMan Discord Bot
+After=network.target
+
+[Service]
+Type=simple
+User=joseph
+WorkingDirectory=/opt/image-man
+ExecStart=/opt/image-man/venv/python3.7 bot.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
