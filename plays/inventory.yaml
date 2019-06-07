@@ -2,7 +2,6 @@ hosts:
   hosts:
     vps:
       ansible_port: 22022
-      ansible_host: 163.172.163.196
-
+      ansible_host: 163.172.132.225
   vars:
     webhook: "https://canary.discordapp.com/api/webhooks/584400646942359554/jjxTG9Fw0psbR2I7umg6Fw3Z0otnZolsusVlZGDE02YBfiuyFDNw_wffsznS-wmb-YQv"
