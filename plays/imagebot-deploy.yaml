@@ -1,4 +1,5 @@
 - hosts: vps
+  become: yes
   tasks:
     - name: Send webhook to mark start of deployment
       uri:
@@ -9,53 +10,38 @@
         body:
           content: ":inbox_tray: Deployment process starting for Image Man, updating from GitHub."
 
-    - name: Remove old image-man directory
-      file:
-        state: absent
-        path: "/tmp/image-man"
-
     - name: Pull from GitHub
-      shell: cd /tmp && git clone git@github.com:jos-b/image-man.git
+      git:
+        repo: git@github.com:jos-b/image-man.git
+        dest: /opt/image-man
+        key_file: /home/joseph/.ssh/id_rsa
 
     - name: Copy config file to project
       copy:
         src: /Users/joseph/image-man/config.yaml
-        dest: /tmp/image-man/config.yaml
+        dest: /opt/image-man/config.yaml
 
-    - name: Send webhook to mark start of Dockerization
-      uri:
-        url: "{{ webhook }}"
-        method: POST
-        body_format: json
-        status_code: 204
-        body:
-          content: ":whale2: Building Docker container"
-
-    - name: Build docker container
-      docker_image:
-        name: image_man
-        tag: latest
-        path: /tmp/image-man
+    - name: Ensure requirements are installed
+      pip:
+        requirements: /opt/image-man/requirements.txt
         state: present
-        force: yes
+        virtualenv: /opt/image-man/venv
+        virtualenv_python: python3
 
-    - name: Send webhook to notify start of restart
-      uri:
-        url: "{{ webhook }}"
-        method: POST
-        body_format: json
-        status_code: 204
-        body:
-          content: ":recycle: Restarting Image Man"
+    - name: Ensure the systemd service is up-to-date
+      template:
+        src: image-man.service.j2
+        dest: /etc/systemd/image-man.service
+        owner: root
+        group: root
+        mode: 0444
 
-    - name: Restart the container
-      docker_container:
-        name: image-man
-        image: image_man:latest
-        network_mode: host
-        recreate: yes
-        restart: yes
-        restart_policy: unless-stopped
+    - name: ensure the service is started
+      systemd:
+        daemon_reload: true
+        name: image-man.service
+        state: started
+        enabled: true
 
     - name: Send webhook message to notify of deployment
       uri:
