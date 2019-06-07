@@ -21,6 +21,13 @@
         src: /Users/joseph/image-man/config.yaml
         dest: /opt/image-man/config.yaml
 
+    - name: Ensure apt dependencies are installed
+      apt:
+        name: "{{ packages }}"
+      vars:
+        packages:
+          - libmagickwand-dev
+
     - name: Ensure requirements are installed
       pip:
         requirements: /opt/image-man/requirements.txt

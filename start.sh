@@ -1,5 +1,5 @@
 #!/bin/bash
 
-curl https://discordapp.com/ > /opt/image-man/testing
+echo "Starting image man"
 
 ./venv/bin/python3 bot.py
