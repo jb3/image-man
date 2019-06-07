@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.INFO)
 log = logging.getLogger()
 
 
-print(urllib.request.urlopen("https://josephbanks.me"))
+print(urllib.request.urlopen("http://josephbanks.me"))
 
 
 class ImageMan(commands.Bot):
