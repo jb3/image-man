@@ -6,11 +6,8 @@ After=network.target
 Type=simple
 User=joseph
 WorkingDirectory=/opt/image-man
-ExecStart=/opt/image-man/venv/bin/python3 bot.py
+ExecStart=/opt/image-man/start.sh
 Restart=on-failure
-
-ReadOnlyPaths=/
-InaccessiblePaths=/etc
 
 [Install]
 WantedBy=multi-user.target
