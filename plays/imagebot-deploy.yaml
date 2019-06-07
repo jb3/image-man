@@ -31,7 +31,7 @@
     - name: Ensure the systemd service is up-to-date
       template:
         src: image-man.service.j2
-        dest: /etc/systemd/image-man.service
+        dest: /etc/systemd/system/image-man.service
         owner: root
         group: root
         mode: 0444
