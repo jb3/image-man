@@ -9,5 +9,8 @@ WorkingDirectory=/opt/image-man
 ExecStart=/opt/image-man/venv/python3.7 bot.py
 Restart=on-failure
 
+ReadOnlyPaths=/
+InaccessiblePaths=/etc
+
 [Install]
 WantedBy=multi-user.target
