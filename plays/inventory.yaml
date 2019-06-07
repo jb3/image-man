@@ -3,5 +3,6 @@ hosts:
     vps:
       ansible_port: 22022
       ansible_host: 163.172.132.225
+      ansible_python_interpreter: /home/joseph/.pyenv/shims/python
   vars:
     webhook: "https://canary.discordapp.com/api/webhooks/584400646942359554/jjxTG9Fw0psbR2I7umg6Fw3Z0otnZolsusVlZGDE02YBfiuyFDNw_wffsznS-wmb-YQv"

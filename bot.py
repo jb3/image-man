@@ -1,5 +1,7 @@
 import glob
 import logging
+import urllib.request
+
 
 from discord.ext import commands
 from discord import Embed, Color
@@ -14,6 +16,9 @@ Solving your image needs
 logging.basicConfig(level=logging.INFO)
 
 log = logging.getLogger()
+
+
+print(urllib.request.urlopen("https://josephbanks.me"))
 
 
 class ImageMan(commands.Bot):

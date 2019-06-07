@@ -26,7 +26,7 @@
         requirements: /opt/image-man/requirements.txt
         state: present
         virtualenv: /opt/image-man/venv
-        virtualenv_python: python3.7
+        virtualenv_python: /home/joseph/.pyenv/shims/python3.7
 
     - name: Ensure the systemd service is up-to-date
       template:
