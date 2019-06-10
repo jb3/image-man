@@ -48,7 +48,7 @@
       systemd:
         daemon_reload: true
         name: image-man.service
-        state: started
+        state: restarted
         enabled: true
 
     - name: Send webhook message to notify of deployment
