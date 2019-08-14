@@ -7,7 +7,7 @@ import traceback
 
 
 async def is_owner(ctx):
-    return ctx.author.id == 165023948638126080
+    return ctx.author.id == 165023948638126080 or 267628507062992896 in [r.id for r in ctx.author.roles]
 
 
 class Eval(commands.Cog):
