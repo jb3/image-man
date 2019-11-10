@@ -37,8 +37,8 @@ class LiquidRescale(commands.Cog):
             original_height = im.height
             original_width = im.width
 
-            im.liquid_rescale(width=int(im.width * 1.5),
-                              height=int(im.height * 1.5),
+            im.liquid_rescale(width=int(im.width * 0.5),
+                              height=int(im.height * 0.5),
                               delta_x=1, rigidity=0)
 
             im.resize(original_width, original_height)
