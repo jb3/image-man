@@ -1,7 +1,7 @@
 hosts:
   hosts:
     vps:
-      ansible_port: 22022
+      ansible_port: 22
       ansible_host: 163.172.132.225
       ansible_python_interpreter: /home/joseph/.pyenv/shims/python
   vars:
